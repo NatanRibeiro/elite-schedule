@@ -7,12 +7,16 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Tournaments</ion-title>
+    <ion-title>Campeonatos</ion-title>
   </ion-navbar>
 
 </ion-header>
 
-
 <ion-content padding>
-  <button ion-button (click)='navigate()'>Back</button>
+
+    <button ion-button full *ngFor="let tournament of tournaments" ion-ite (click)="goToTeams($event, tournament)">
+        {{tournament.name}}
+      </button>
+
+  <!-- <button ion-button (click)='navigate()'>Back</button> -->
 </ion-content>

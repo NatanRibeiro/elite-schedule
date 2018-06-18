@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { MyTeamsPage } from '../my-teams/my-teams-';
+import { NavController, NavParams } from 'ionic-angular';
+import { TeamsPage } from '../teams/teams';
 
 /**
  * Generated class for the TournamentsPage page.
@@ -9,12 +9,13 @@ import { MyTeamsPage } from '../my-teams/my-teams-';
  * Ionic pages and navigation.
  */
 
-@IonicPage()
 @Component({
   selector: 'page-tournaments',
   templateUrl: 'tournaments.html',
 })
 export class TournamentsPage {
+
+  public tournaments = [{ id: 1, name: 'Copa do Mundo' }];
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
@@ -25,6 +26,10 @@ export class TournamentsPage {
 
   navigate(){
     this.navCtrl.pop();
+  }
+
+  goToTeams($event, tournament){
+    this.navCtrl.push(TeamsPage, tournament);
   }
 
 }
