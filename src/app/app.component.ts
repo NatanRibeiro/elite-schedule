@@ -43,7 +43,7 @@ export class MyApp {
     this.nav.push(MyTeamsPage);
   }
 
-  goToTournament(){
+  goToTournaments(){
     this.nav.push(TournamentsPage);
   }
 }

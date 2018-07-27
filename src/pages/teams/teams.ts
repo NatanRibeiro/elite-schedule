@@ -1,13 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { TeamHomePage } from '../team-home/team-home';
-
-/**
- * Generated class for the TeamsPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { TeamDetailPage } from '../team-detail/team-detail';
 
 @Component({
   selector: 'page-teams',
@@ -17,11 +10,9 @@ export class TeamsPage {
 
   public tournament : any = {};
   public teams = [
-    { id: 1, name: 'Brazil' },
-    { id: 2, name: 'Russia' },
-    { id: 3, name: 'German' },
-    { id: 4, name: 'French' },
-    { id: 5, name: 'Portugal' }
+    { id: 1, name: 'HC Elite' },
+    { id: 2, name: 'Team Takeover' },
+    { id: 3, name: 'DC Thunder' }
   ];
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
@@ -34,7 +25,6 @@ export class TeamsPage {
   }
 
   itemTapped($event, team) {
-    this.navCtrl.push(TeamHomePage, team);
+    this.navCtrl.push(TeamDetailPage, team);
   }
-
 }

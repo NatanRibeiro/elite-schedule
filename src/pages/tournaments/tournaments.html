@@ -6,17 +6,27 @@
 -->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>Campeonatos</ion-title>
+  <ion-navbar color="primary">
+    <ion-title>Select a Tournament</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 <ion-content padding>
 
-    <button ion-button full *ngFor="let tournament of tournaments" ion-ite (click)="goToTeams($event, tournament)">
+  <!-- <button ion-button full *ngFor="let tournament of tournaments" ion-ite (click)="goToTeams($event, tournament)">
         {{tournament.name}}
-      </button>
+      </button> -->
+  <!-- <button ion-button (click)="navigate()">Back</button> -->
 
   <!-- <button ion-button (click)='navigate()'>Back</button> -->
+
+  <ion-list>
+    <button ion-item (click)="itemTapped()">
+      March Madness Tournament
+    </button>
+    <button ion-item (click)="itemTapped()">
+      Summer Shodown
+    </button>
+  </ion-list>
 </ion-content>

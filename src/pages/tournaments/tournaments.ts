@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { TeamsPage } from '../teams/teams';
+import { MyTeamsPage} from '../my-teams/my-teams';
 
 /**
  * Generated class for the TournamentsPage page.
@@ -32,4 +33,7 @@ export class TournamentsPage {
     this.navCtrl.push(TeamsPage, tournament);
   }
 
+  itemTapped(){
+    this.navCtrl.push(TeamsPage);
+  }
 }
