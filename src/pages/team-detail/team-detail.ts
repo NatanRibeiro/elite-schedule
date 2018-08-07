@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { MyTeamsPage } from '../my-teams/my-teams';
 
 @Component({
   selector: 'page-team-detail',

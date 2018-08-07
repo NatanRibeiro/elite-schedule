@@ -16,11 +16,12 @@ import { MyTeamsPage } from '../my-teams/my-teams';
   templateUrl: 'team-home.html',
 })
 export class TeamHomePage {
-
+  public team: any = {};
   public teamDetailTab = TeamDetailPage;
   public standingsTab = StandingsPage;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+    this.team = this.navParams.data;
   }
 
   ionViewDidLoad() {
@@ -28,7 +29,7 @@ export class TeamHomePage {
   }
 
   goHome() {
-    this.navCtrl.push(MyTeamsPage);
+    //this.navCtrl.push(MyTeamsPage);
+    this.navCtrl.popToRoot();
   }
-
 }
