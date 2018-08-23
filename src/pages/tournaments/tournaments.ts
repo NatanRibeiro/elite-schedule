@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, LoadingController } from 'ionic-angular';
 import { TeamsPage } from '../teams/teams';
 import { MyTeamsPage} from '../my-teams/my-teams';
+import { EliteApi } from '../../providers/elite-api/elite-api';
 
 /**
  * Generated class for the TournamentsPage page.
@@ -16,13 +17,26 @@ import { MyTeamsPage} from '../my-teams/my-teams';
 })
 export class TournamentsPage {
 
-  public tournaments = [{ id: 1, name: 'Copa do Mundo' }];
+  public tournaments: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+
+  constructor(public navCtrl: NavController, 
+              public navParams: NavParams,
+              private eliteApi: EliteApi,
+            public loadingController: LoadingController) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad TournamentsPage');
+    let loader = this.loadingController.create({
+      content: 'Getting tournaments...'
+    });
+
+    loader.present().then(()=> {
+      this.eliteApi.getTournaments().then(data=> {
+        this.tournaments = data
+        loader.dismiss();
+      });
+    });
   }
 
   navigate(){
@@ -33,7 +47,7 @@ export class TournamentsPage {
     this.navCtrl.push(TeamsPage, tournament);
   }
 
-  itemTapped(){
-    this.navCtrl.push(TeamsPage);
+  itemTapped($event, tourney){
+    this.navCtrl.push(TeamsPage, tourney);
   }
 }
