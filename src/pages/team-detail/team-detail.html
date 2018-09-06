@@ -3,7 +3,7 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-list>
+  <ion-list no-lines>
     <ion-item *ngFor="let game of games" (click)="gameClicked($event, game)">
       {{game.opponent}}
     </ion-item>

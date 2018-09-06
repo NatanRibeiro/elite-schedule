@@ -4,7 +4,7 @@
   </ion-navbar>
 </ion-header>
 <ion-content>
-  <ion-list>
+  <ion-list no-lines>
     <button *ngFor="let item of tournaments" ion-item (click)="itemTapped($event, item)">
       {{item.name}}
     </button>

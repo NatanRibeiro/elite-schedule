@@ -11,8 +11,17 @@
 </ion-header>
 
 <ion-content padding>
-    <p>Você ainda não escolheu a sua Seleção</p>
-    <p>Primeiro vá para a tela de Visualizar Seleçōes e depois escolha a sua Seleção favorita</p>
+    <!-- <p>Você ainda não escolheu a sua Seleção</p>
+    <p>Primeiro vá para a tela de Visualizar Seleçōes e depois escolha a sua Seleção favorita</p> -->
+
+    <ion-list no-lines>
+        <ion-list-header>Followed Teams</ion-list-header>
+        <button ion-item *ngFor="let item of favorites" (click)="favoriteTapped($event, item)">
+            <ion-icon name="star"></ion-icon>
+            {{item.team.name}}
+            <p>{{item.tournamentName}}</p>
+        </button>
+    </ion-list>
 
     <button ion-button full (click)='goToTournaments()'>Finda a Tournament</button>
 </ion-content>
