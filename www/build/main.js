@@ -185,6 +185,8 @@ var MyTeamsPage = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(18);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__team_home_team_home__ = __webpack_require__(51);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_elite_api_elite_api__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_lodash__ = __webpack_require__(278);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_lodash__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -198,21 +200,36 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var TeamsPage = /** @class */ (function () {
-    function TeamsPage(navCtrl, navParams, eliteApi) {
+    function TeamsPage(navCtrl, navParams, loadingController, eliteApi) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
+        this.loadingController = loadingController;
         this.eliteApi = eliteApi;
         this.tournament = {};
         this.teams = [];
         this.tournament = navParams.data;
-        console.log('**nav param', navParams.data);
     }
     TeamsPage.prototype.ionViewDidLoad = function () {
         var _this = this;
         var selectedTourney = this.navParams.data;
-        this.eliteApi.getTournamentData(selectedTourney.id).subscribe(function (data) {
-            _this.teams = data.teams;
+        var loader = this.loadingController.create({
+            content: 'Getting data...'
+        });
+        loader.present().then(function () {
+            _this.eliteApi.getTournamentData(selectedTourney.id).subscribe(function (data) {
+                _this.allTeams = data.teams;
+                _this.allTeamDivisions =
+                    __WEBPACK_IMPORTED_MODULE_4_lodash__["chain"](data.teams)
+                        .groupBy('division')
+                        .toPairs()
+                        .map(function (item) { return __WEBPACK_IMPORTED_MODULE_4_lodash__["zipObject"](['divisionName', 'divisionTeams'], item); })
+                        .value();
+                _this.teams = _this.allTeamDivisions;
+                console.log('data: ', _this.teams);
+                loader.dismiss();
+            });
         });
     };
     TeamsPage.prototype.itemTapped = function ($event, team) {
@@ -221,13 +238,12 @@ var TeamsPage = /** @class */ (function () {
     };
     TeamsPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-teams',template:/*ion-inline-start:"/Workspace/Studies/Elite-Schedule/elite-schedule/src/pages/teams/teams.html"*/'\n<ion-header>\n  <ion-navbar color="primary">\n    <ion-title>Teams</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <button *ngFor="let team of teams" ion-item (click)="itemTapped($event, team)">\n    {{team.name}}\n  </button>\n</ion-content>'/*ion-inline-end:"/Workspace/Studies/Elite-Schedule/elite-schedule/src/pages/teams/teams.html"*/,
+            selector: 'page-teams',template:/*ion-inline-start:"/Workspace/Studies/Elite-Schedule/elite-schedule/src/pages/teams/teams.html"*/'\n<ion-header>\n  <ion-navbar color="primary">\n    <ion-title>Teams</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <ion-list>\n    <ion-item-group *ngFor="let division of teams">\n      <ion-item-divider color="secondary">\n        {{division.divisionName}}\n      </ion-item-divider>\n      <button *ngFor="let team of division.divisionTeams" ion-item (click)="itemTapped($event, team)">\n        {{team.name}}\n      </button>\n    </ion-item-group>\n  </ion-list>\n</ion-content>'/*ion-inline-end:"/Workspace/Studies/Elite-Schedule/elite-schedule/src/pages/teams/teams.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */],
-            __WEBPACK_IMPORTED_MODULE_3__providers_elite_api_elite_api__["a" /* EliteApi */]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* LoadingController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* LoadingController */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3__providers_elite_api_elite_api__["a" /* EliteApi */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_elite_api_elite_api__["a" /* EliteApi */]) === "function" && _d || Object])
     ], TeamsPage);
     return TeamsPage;
+    var _a, _b, _c, _d;
 }());
 
 //# sourceMappingURL=teams.js.map
